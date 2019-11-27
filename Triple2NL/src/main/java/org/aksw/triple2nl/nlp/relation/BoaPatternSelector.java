@@ -24,26 +24,16 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 
+import com.google.common.base.Joiner;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-
-import com.google.common.base.Joiner;
 
 /**
  * 
@@ -51,7 +41,7 @@ import com.google.common.base.Joiner;
  */
 public class BoaPatternSelector {
 
-    private static SolrServer server;
+    private static HttpSolrClient server;
     private static Double WORDNET_DISTANCE_BOOST_FACTOR = 300000D;
     private static Double BOA_SCORE_BOOST_FACTOR = 10000D;
     private static Double REVERB_BOOST_FACTOR = 1000000D;
@@ -60,8 +50,14 @@ public class BoaPatternSelector {
     private static final List<String> BE_TOKENS = Arrays.asList("am", "are", "is", "was", "were");
     private static final String SOLR_INDEX = "sparql2nl";//"sparql2nl";//"boa_detail";
 
+    private static String SOLR_URL = "http://dbpedia.aksw.org:8080/solr/" + SOLR_INDEX;
+
     static {
-    	server = new HttpSolrServer("http://dbpedia.aksw.org:8080/solr/" + SOLR_INDEX);
+    	server = new HttpSolrClient.Builder()
+                .withBaseSolrUrl(SOLR_URL)
+                .withConnectionTimeout(10000)
+                .withSocketTimeout(60000)
+                .build();
     }
 
     /**
@@ -215,7 +211,7 @@ public class BoaPatternSelector {
                 }
             }
         }
-        catch (SolrServerException e) {
+        catch (SolrServerException | IOException e) {
 
             System.out.println("Could not execute query: " + e);
             e.printStackTrace();
