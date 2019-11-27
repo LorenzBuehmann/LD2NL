@@ -69,7 +69,7 @@ String text = converter.convert(t);
 There is a very basic REST service based on SparkJava framework in class `org.aksw.triple2nl.rest.RESTService`.
 It used an embedded Jetty server on startup.
 
-###### How to start: 
+##### How to start: 
 Simply run the `main()` method in class `org.aksw.triple2nl.rest.RESTService`, e.g. from Maven via
 ```bash
 mvn exec:java -Dexec.mainClass=org.aksw.triple2nl.rest.RESTService -Dexec.args="-p9999"
