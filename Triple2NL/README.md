@@ -66,7 +66,7 @@ TripleConverter converter = new TripleConverter(endpoint);
 String text = converter.convert(t);
 ```
 #### REST service
-There is a very basic REST service based on SparkJava framework in class `org.aksw.triple2nl.rest.RESTService`.
+There is a very basic REST service based on SparkJava framework in class [`org.aksw.triple2nl.rest.RESTService`](https://github.com/LorenzBuehmann/LD2NL/blob/master/Triple2NL/src/main/java/org/aksw/triple2nl/rest/RESTService.java).
 It used an embedded Jetty server on startup.
 
 ##### How to start: 
