@@ -72,7 +72,7 @@ It used an embedded Jetty server on startup.
 ##### How to start: 
 Simply run the `main()` method in class `org.aksw.triple2nl.rest.RESTService`, e.g. from Maven via
 ```bash
-mvn exec:java -Dexec.mainClass=org.aksw.triple2nl.rest.RESTService -Dexec.args="-p9999"
+mvn exec:java -Dexec.mainClass=org.aksw.triple2nl.rest.RESTService -Dexec.args="-p4567"
 ```
 The port can be specified optionally with CLI param `-p` or `--port`, default port is `4567`.
 ##### How to use:
